@@ -12,9 +12,14 @@ def load_template(path):
 
     i = template.find('\n---\n')
     ret = yaml.load(template[:i])
+    text = template[i+5:]
 
+    if text[-1] == '\n':
+        text = text[:-1]
+
+    ret['text'] = text
     ret.setdefault('name', os.path.splitext(os.path.basename(path))[0])
-    ret['text'] = template[i+5:]
+    ret.setdefault('description', path)
 
     return ret
 
@@ -37,6 +42,6 @@ class NewViewFromTemplateCommand(sublime_plugin.WindowCommand):
             callback
         )
 
-    def create_view_from_template(self, name, description, text, **kwargs):
-        view = create_view(self.window, **kwargs)
+    def create_view_from_template(self, *, name, description, text, settings=None):
+        view = create_view(self.window, settings=settings)
         view.run_command('insert_snippet', {'contents': text})

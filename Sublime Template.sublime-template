@@ -1,4 +1,4 @@
-description: This is another test template.
+description: A new template that will appear in this menu.
 settings:
     syntax: Packages/SublimeTemplate/SublimeTemplate.sublime-syntax
 ---
