@@ -1,0 +1,8 @@
+description: This is another test template.
+settings:
+    syntax: Packages/SublimeTemplate/SublimeTemplate.sublime-syntax
+---
+name: ${1:New Template}
+description: ${2:This is my new template.}
+---
+${0:Hello, World!}

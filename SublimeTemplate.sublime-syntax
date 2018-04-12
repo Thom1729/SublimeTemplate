@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Sublime Template
+file_extensions:
+  - sublime-template
+scope: source.sublime-template
+contexts:
+  main:
+    - match: ^---
+      scope: punctuation.separator.file
+      push: rest
+    - match: ''
+      embed: scope:source.yaml
+      escape: (?=^---)
+
+  rest:
+    - match: '[^\s\S]'
