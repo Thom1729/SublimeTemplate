@@ -32,7 +32,10 @@ class NewViewFromTemplateCommand(sublime_plugin.WindowCommand):
 
         def callback(i):
             if i == -1: return
-            self.create_view_from_template(**templates[i])
+            self.create_view_from_template(
+                text=templates[i]['text'],
+                settings=templates[i].get('settings', None)
+            )
 
         self.window.show_quick_panel(
             [
@@ -42,6 +45,6 @@ class NewViewFromTemplateCommand(sublime_plugin.WindowCommand):
             callback
         )
 
-    def create_view_from_template(self, *, name, description, text, settings=None):
+    def create_view_from_template(self, *, text, settings=None):
         view = create_view(self.window, settings=settings)
         view.run_command('insert_snippet', {'contents': text})
