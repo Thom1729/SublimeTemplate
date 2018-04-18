@@ -1,6 +1,5 @@
 description: A new template that will appear in this menu.
-settings:
-    syntax: Packages/SublimeTemplate/SublimeTemplate.sublime-syntax
+scope: source.sublime-template
 ---
 name: ${1:New Template}
 description: ${2:This is my new template.}
