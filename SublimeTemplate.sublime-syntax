@@ -8,10 +8,8 @@ contexts:
   main:
     - match: ^---
       scope: punctuation.separator.file
-      push: rest
+      embed: scope:source.sublime.snippet
+      escape: \B\b # Never
     - match: ''
       embed: scope:source.yaml
       escape: (?=^---)
-
-  rest:
-    - match: '[^\s\S]'

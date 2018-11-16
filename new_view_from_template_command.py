@@ -4,7 +4,8 @@ import sublime_plugin
 import os.path
 
 from sublime_lib.view_utils import new_view
-from sublime_lib.syntax import projection
+from sublime_lib.collection_utils import projection
+from sublime_lib import show_selection_panel
 
 import yaml
 
@@ -26,26 +27,15 @@ def load_template(path):
 
 class NewViewFromTemplateCommand(sublime_plugin.WindowCommand):
     def run(self):
-        templates = [
-            load_template(path)
-            for path in sublime.find_resources('*.sublime-template')
-        ]
-
-        def callback(i):
-            if i == -1: return
-            template = templates[i]
-            self.create_view_from_template(
+        show_selection_panel(
+            self.window,
+            [load_template(path) for path in sublime.find_resources('*.sublime-template')],
+            labels=lambda template: (template['name'], template['description']),
+            on_select=lambda template: self.create_view_from_template(
                 **projection(template, {
                     'settings', 'syntax', 'scope', 'contents'
                 })
             )
-
-        self.window.show_quick_panel(
-            [
-                [ template['name'], template['description'] ]
-                for template in templates
-            ],
-            callback
         )
 
     def create_view_from_template(self, *, contents, **kwargs):
